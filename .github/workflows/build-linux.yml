@@ -1,0 +1,53 @@
+name: build-linux
+
+on: 
+  push:
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  source_dir: "${{github.workspace}}"
+  build_dir: "${{github.workspace}}/build"
+
+jobs:
+  build:
+    name: "build-${{matrix.os}}-${{matrix.build_type}}-${{matrix.compiler.c}}"
+    runs-on: "${{matrix.os}}"
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            compiler: { c: gcc, cpp: g++ }
+            generator: Ninja
+            build_type: Release
+            platform: x64
+
+          - os: ubuntu-20.04
+            compiler: { c: clang, cpp: clang++ }
+            generator: Ninja
+            build_type: Release
+            platform: x64
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Environment setup
+      uses: ./.github/actions/setup-linux
+
+    - name: Generate build
+      run: |
+        cmake \
+          -S ${{env.source_dir}} \
+          -B ${{env.build_dir}} \
+          -G ${{matrix.generator}} \
+          -D CMAKE_BUILD_TYPE=${{env.build_type}} \
+          -D CMAKE_CXX_COMPILER=${{matrix.compiler.cpp}}
+
+    - name: Build
+      run: cmake --build ${{env.build_dir}}
