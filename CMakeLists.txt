@@ -27,16 +27,16 @@ if(PROJECT_CONAN_ENABLED)
         conan_basic_setup()
     else()
         include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/conan.cmake")
+        conan_cmake_autodetect(PROJECT_CONAN_SETTINGS)
         conan_cmake_install(
             PATH_OR_REFERENCE "${CMAKE_CURRENT_SOURCE_DIR}/conanfile.py"
             REMOTE conancenter
             BUILD missing
+            SETTINGS "${PROJECT_CONAN_SETTINGS}"
             # Directory to put generator files (i.e. conanbuildinfo.txt)
             INSTALL_FOLDER "${PROJECT_CONAN_INSTALL_DIR}"
             # Root directory for generated and build files
             OUTPUT_FOLDER "${PROJECT_CONAN_OUTPUT_DIR}"
-            # TODO: add support for automatic detection of settings
-            # SETTINGS "${PROJECT_CONAN_SETTINGS}"
             # TODO: add support for conan profiles
             # PROFILE "${PROJECT_CONAN_PROFILE}"
         )
