@@ -7,6 +7,21 @@ Template project for C++ with CMake and Conan support.
 
 ## Supported tools
 
-CMake (3.17+)
-Conan (1.58.0+)
-Clang-format (16.0+)
+CMake (3.19+)
+Conan (2.0.0+)
+
+## Usage
+
+```sh
+# TODO: Figure out how to configure CC/CXX in the profile
+conan profile detect --name <profile>
+
+# Install the dependencies
+conan install . -pr <profile>
+
+# Build the package
+conan build . -pr <profile> --build missing
+
+# Create the package
+conan create . -pr <profile>
+```
