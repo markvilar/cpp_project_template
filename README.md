@@ -7,7 +7,7 @@ Template project for C++ with CMake and Conan support.
 
 ## Supported tools
 
-CMake (3.17+)
+CMake (3.19+)
 Conan (2.0.0+)
 
 ## Usage
@@ -17,8 +17,11 @@ Conan (2.0.0+)
 conan profile detect --name <profile>
 
 # Install the dependencies
-conan install .
+conan install . -pr <profile>
 
 # Build the package
-conan build .
+conan build . -pr <profile> --build missing
+
+# Create the package
+conan create . -pr <profile>
 ```

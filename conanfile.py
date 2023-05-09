@@ -39,12 +39,12 @@ class MyProjectConanFile(ConanFile):
 
     exports_sources = [
         "CMakeLists.txt", 
+        "bin/*",
         "cmake/*",
-        "examples/*", 
+        "example/*", 
+        "resource/*", 
         "src/*", 
-        "resources/*", 
         "test/*",
-        "vendor/*"
     ]
     
     @property
@@ -89,8 +89,10 @@ class MyProjectConanFile(ConanFile):
 
         # Check compiler version, TODO: Fix checking of major version
         compiler = str(self.settings.compiler)
-        compiler_version = str(self.settings.compiler.version)
-        minimum_version = self._compilers_minimum_version.get(compiler)
+        compiler_version = Version(self.settings.compiler.version)
+        minimum_version = Version(
+            self._compilers_minimum_version.get(compiler)
+        )
         if minimum_version and minimum_version > compiler_version:
             raise ConanInvalidConfiguration(
                 f"{self.ref} requires C++{self._min_cppstd}, which your "
@@ -105,20 +107,14 @@ class MyProjectConanFile(ConanFile):
         cmake_layout(self)
 
     def source(self):
-        """ """
-        # TODO: Implement
+        """ Retrieves and prepares source code for the package. """
+        # NOTE: Some examples
+        # git = tools.Git(folder=self.folders.source)
+        # git.clone("https://github.com/myuser/mypackage.git")
+        # git.checkout("v1.0")
         pass
 
-    def _get_cmake_settings(self) -> Dict:
-        """ """
-        return {
-            # TODO: Add compiler path instead of compiler string
-            #"CMAKE_CXX_COMPILER"         : str(self.settings.compiler), 
-            #"CMAKE_CXX_COMPILER_VERSION" : str(self.settings.compiler.version),
-            #"CMAKE_CXX_FLAGS"            : "-Wall -Wextra",
-        }
-
-    def _get_cmake_options(self) -> Dict:
+    def _get_cmake_variables(self) -> Dict:
         """ Internal methods to get CMake variables based on options. """
         return {
             "PROJECT_BUILD_SHARED" : 
@@ -139,12 +135,11 @@ class MyProjectConanFile(ConanFile):
 
         # Set up toolchain
         tc = CMakeToolchain(self)
-        settings = self._get_cmake_settings()
-        options = self._get_cmake_options()
-        for key, setting in self._get_cmake_settings().items():
-            tc.variables[key] = setting
-        for key, option in self._get_cmake_options().items():
-            tc.variables[key] = option
+
+        # Add variables to toolchain
+        variables = self._get_cmake_variables()
+        for name, value in variables.items():
+            tc.variables[name] = value
         
         # NOTE: Debug, remove
         #print(tc.variables)
@@ -154,9 +149,8 @@ class MyProjectConanFile(ConanFile):
 
     def build(self):
         """ Builds the library. """
-        print(self.settings)
         cmake = CMake(self)
-        cmake.configure() # TODO: Pass in variables here
+        cmake.configure()
         cmake.build()
 
     def package(self):

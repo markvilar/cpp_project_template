@@ -5,12 +5,6 @@ project(cpp_project VERSION 0.0.1 LANGUAGES CXX)
 include(cmake/project_settings.cmake)
 include(cmake/prevent_in_source_build.cmake)
 
-# Print some stuff
-message(STATUS "--------------------")
-message(STATUS "Compiler:         ${CMAKE_CXX_COMPILER}")
-message(STATUS "Compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
-message(STATUS "--------------------")
-
 # -----------------------------------------------------------------------------
 # Project options
 # -----------------------------------------------------------------------------
