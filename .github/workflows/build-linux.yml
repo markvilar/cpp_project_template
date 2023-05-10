@@ -12,6 +12,7 @@ defaults:
 env:
   source_dir: "${{github.workspace}}"
   build_dir: "${{github.workspace}}/build"
+  profile_dir: "${{github.workspace}}/conan/profiles"
 
 jobs:
   build:
@@ -56,14 +57,14 @@ jobs:
     - name: Environment setup
       uses: ./.github/actions/setup-linux
 
-    - name: Conan default and client profile
+    - name: Conan profile
       run: conan profile detect
     
     - name: Conan install
-      run: conan install . --profile ${{env.source_dir}}/${{matrix.profile}}
+      run: conan install . --profile ${{env.profile_dir}}/${{matrix.profile}}
 
     - name: Conan build
-      run: conan build . --profile ${{env.source_dir}}/${{matrix.profile}} --build missing
+      run: conan build . --profile ${{env.profile_dir}}/${{matrix.profile}} --build missing
 
     - name: Conan create
-      run: conan create . --profile ${{env.source_dir}}/${{matrix.profile}}
+      run: conan create . --profile ${{env.profile_dir}}/${{matrix.profile}}
