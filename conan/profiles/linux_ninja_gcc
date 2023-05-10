@@ -17,4 +17,4 @@ CXX=/usr/bin/g++-10
 
 [conf]
 tools.build:jobs=2
-tools.cmake.cmaketoolchain:generator="Unix Makefiles"
+tools.cmake.cmaketoolchain:generator=Ninja

@@ -38,7 +38,7 @@ jobs:
           
           - os: ubuntu-20.04
             compiler: { c: gcc, cpp: g++ }
-            generator: Ninja
+            generator: Unix Makefiles
             build_type: Release
             platform: x64
             profile: linux_makefiles_gcc
