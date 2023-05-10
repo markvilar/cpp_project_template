@@ -26,14 +26,28 @@ jobs:
             generator: Ninja
             build_type: Release
             platform: x64
-            profile: conan_gcc
-
+            profile: linux_ninja_gcc
+          
           - os: ubuntu-20.04
             compiler: { c: clang, cpp: clang++ }
             generator: Ninja
             build_type: Release
             platform: x64
-            profile: conan_clang
+            profile: linux_ninja_clang
+          
+          - os: ubuntu-20.04
+            compiler: { c: gcc, cpp: g++ }
+            generator: Ninja
+            build_type: Release
+            platform: x64
+            profile: linux_makefiles_gcc
+          
+          - os: ubuntu-20.04
+            compiler: { c: clang, cpp: clang++ }
+            generator: Unix Makefiles
+            build_type: Release
+            platform: x64
+            profile: linux_makefiles_clang
 
     steps:
     - name: Checkout repository
@@ -42,14 +56,14 @@ jobs:
     - name: Environment setup
       uses: ./.github/actions/setup-linux
 
-    - name: Conan profile
-      run: conan profile detect --name ${{matrix.profile}}
+    - name: Conan default and client profile
+      run: conan profile detect
     
     - name: Conan install
-      run: conan install . -pr ${{matrix.profile}}
+      run: conan install . --profile ${{source_dir}}/${{matrix.profile}}
 
     - name: Conan build
-      run: conan build . -pr ${{matrix.profile}} --build missing
+      run: conan build . --profile ${{source_dir}}/${{matrix.profile}} --build missing
 
-    - name: Conan package
-      run: conan create . -pr ${{matrix.profile}}
+    - name: Conan create
+      run: conan create . --profile ${{source_dir}}/${{matrix.profile}}
