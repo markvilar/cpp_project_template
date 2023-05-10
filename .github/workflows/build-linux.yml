@@ -60,10 +60,10 @@ jobs:
       run: conan profile detect
     
     - name: Conan install
-      run: conan install . --profile ${{source_dir}}/${{matrix.profile}}
+      run: conan install . --profile ${{env.source_dir}}/${{matrix.profile}}
 
     - name: Conan build
-      run: conan build . --profile ${{source_dir}}/${{matrix.profile}} --build missing
+      run: conan build . --profile ${{env.source_dir}}/${{matrix.profile}} --build missing
 
     - name: Conan create
-      run: conan create . --profile ${{source_dir}}/${{matrix.profile}}
+      run: conan create . --profile ${{env.source_dir}}/${{matrix.profile}}
