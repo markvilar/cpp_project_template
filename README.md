@@ -3,25 +3,28 @@
 [![Build](https://github.com/markvilar/cpp_project_template/actions/workflows/build-linux.yml/badge.svg)](https://github.com/markvilar/cpp_project_template/actions/workflows/build-linux.yml)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-Template project for C++ with CMake and Conan support.
+Template project for C++ with CMake and Conan 2.0 support.
 
 ## Supported tools
 
-CMake (3.19+)
-Conan (2.0.0+)
+- CMake (3.19+)
+- Conan (2.0.0+)
 
-## Usage
+## Conan workflow
+
+The project workflow for Conan 2.0 is listed below. See the `conan/profiles`
+directory for a set of pre-generated profiles.
 
 ```sh
-# TODO: Figure out how to configure CC/CXX in the profile
-conan profile detect --name <profile>
+# Create a default profile
+conan profile detect
 
 # Install the dependencies
-conan install . -pr <profile>
+conan install . --profile <path/to/profile> --build missing
 
 # Build the package
-conan build . -pr <profile> --build missing
+conan build . --profile <path/to/profile> --build missing
 
 # Create the package
-conan create . -pr <profile>
+conan create . --profile <path/to/profile> --build missing
 ```

@@ -41,6 +41,7 @@ class MyProjectConanFile(ConanFile):
         "CMakeLists.txt", 
         "bin/*",
         "cmake/*",
+        "conan/*",
         "example/*", 
         "resource/*", 
         "src/*", 
@@ -87,7 +88,7 @@ class MyProjectConanFile(ConanFile):
         if self.settings.compiler.get_safe("cppstd"):
             check_min_cppstd(self, self._min_cppstd)
 
-        # Check compiler version, TODO: Fix checking of major version
+        # Check compiler version
         compiler = str(self.settings.compiler)
         compiler_version = Version(self.settings.compiler.version)
         minimum_version = Version(
@@ -108,7 +109,7 @@ class MyProjectConanFile(ConanFile):
 
     def source(self):
         """ Retrieves and prepares source code for the package. """
-        # NOTE: Some examples
+        # NOTE: For reference
         # git = tools.Git(folder=self.folders.source)
         # git.clone("https://github.com/myuser/mypackage.git")
         # git.checkout("v1.0")
@@ -141,9 +142,10 @@ class MyProjectConanFile(ConanFile):
         for name, value in variables.items():
             tc.variables[name] = value
         
-        # NOTE: Debug, remove
-        #print(tc.variables)
-        #input()
+        # NOTE: For reference
+        # tc.preprocessor_definitions
+        # tc.cache_variables
+        # tc.variables
 
         tc.generate()
 
@@ -172,9 +174,7 @@ class MyProjectConanFile(ConanFile):
         # Component attributes
         component.libs = ["myproject::cpptemp"]
         component.resdirs= ["resource"]
-        component.requires = [
-            "fmt::fmt",
-        ]
+        component.requires = ["fmt::fmt"]
 
         # Architecture definitions
         if self.settings.os == "Windows":
