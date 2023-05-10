@@ -20,11 +20,11 @@ directory for a set of pre-generated profiles.
 conan profile detect
 
 # Install the dependencies
-conan install . --profile <path/to/profile>
+conan install . --profile <path/to/profile> --build missing
 
 # Build the package
 conan build . --profile <path/to/profile> --build missing
 
 # Create the package
-conan create . --profile <path/to/profile>
+conan create . --profile <path/to/profile> --build missing
 ```

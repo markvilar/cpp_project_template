@@ -61,10 +61,19 @@ jobs:
       run: conan profile detect
     
     - name: Conan install
-      run: conan install . --profile ${{env.profile_dir}}/${{matrix.profile}}
+      run: |
+        conan install ${{env.source_dir}} \
+            --profile ${{env.profile_dir}}/${{matrix.profile}} \
+            --build missing
 
     - name: Conan build
-      run: conan build . --profile ${{env.profile_dir}}/${{matrix.profile}} --build missing
+      run: |
+        conan build ${{env.source_dir}} \
+            --profile ${{env.profile_dir}}/${{matrix.profile}} \
+            --build missing
 
     - name: Conan create
-      run: conan create . --profile ${{env.profile_dir}}/${{matrix.profile}}
+      run: |
+        conan create ${{env.source_dir}} \
+            --profile ${{env.profile_dir}}/${{matrix.profile}} \
+            --build missing
