@@ -25,8 +25,8 @@ runs:
         sudo apt update -y
         sudo apt install -y \
             cmake \
-            gcc \
-            clang \
+            gcc-10 \
+            clang-12 \
             clang-format \
             ninja-build \
             python3-dev \

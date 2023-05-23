@@ -10,11 +10,13 @@ os=Linux
 [options]
 
 [buildenv]
-CC=/usr/bin/clang-12
-CXX=/usr/bin/clang++-12
+CC=clang-12
+CXX=clang++-12
 
 [tool_requires]
 
 [conf]
 tools.build:jobs=2
 tools.cmake.cmaketoolchain:generator=Ninja
+tools.system.package_manager:mode=install
+tools.system.package_manager:sudo=True
