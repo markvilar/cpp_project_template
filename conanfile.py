@@ -42,8 +42,8 @@ class MyProjectConanFile(ConanFile):
         "bin/*",
         "cmake/*",
         "conan/*",
-        "example/*", 
-        "resource/*", 
+        "examples/*", 
+        "resources/*", 
         "src/*", 
         "test/*",
     ]
@@ -173,7 +173,7 @@ class MyProjectConanFile(ConanFile):
 
         # Component attributes
         component.libs = ["myproject::cpptemp"]
-        component.resdirs= ["resource"]
+        component.resdirs= ["resources"]
         component.requires = ["fmt::fmt"]
 
         # Architecture definitions

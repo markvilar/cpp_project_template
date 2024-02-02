@@ -57,7 +57,7 @@ add_subdirectory(bin)
 
 # Add examples
 if(PROJECT_EXAMPLES_ENABLED)
-    add_subdirectory(example)
+    add_subdirectory(examples)
 endif()
 
 # Add tests
